@@ -23,13 +23,13 @@ class MyHandler implements HttpHandler {
             if (method == null) {
                 exchange.setAttribute("response", "ERROR: Unknown WebRoute: " + route);
             }
-            else if (method.getParameterCount() == 2) {
-                String response = (String) method.invoke(myClass.newInstance(), exchange, username);
+            else if (method.getParameterCount() == 1) {
+                String response = (String) method.invoke(myClass.newInstance(), username);
                 exchange.setAttribute("response", response);
             } else {
-                method.invoke(myClass.newInstance(), exchange);
-                String res = (String) method.invoke(myClass.newInstance(), exchange);
-                exchange.setAttribute("response", res);
+                method.invoke(myClass.newInstance());
+                String response = (String) method.invoke(myClass.newInstance());
+                exchange.setAttribute("response", response);
                 }
         } catch (IllegalAccessException |
                 InvocationTargetException |
